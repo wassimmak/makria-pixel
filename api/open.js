@@ -7,9 +7,13 @@ const BOT_UA = [
   "yahoo mail", "proofpoint", "barracuda", "mimecast"
 ];
 
+// UA trop courts ou génériques = prefetch déguisé (ex: Outlook "Mozilla/5.0")
 function isPrefetch(ua) {
   const lower = (ua || "").toLowerCase();
-  return BOT_UA.some(bot => lower.includes(bot));
+  if (BOT_UA.some(bot => lower.includes(bot))) return true;
+  // UA trop court = prefetch déguisé (vrai browser a toujours > 50 chars)
+  if (ua.length < 50) return true;
+  return false;
 }
 
 export default async function handler(req, res) {
