@@ -23,9 +23,12 @@ export default async function handler(req, res) {
   res.setHeader("Content-Type", "image/gif");
   res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
 
+  // Log TOUS les appels pour débug
+  console.log(`[PIXEL] id=${id} | UA=${ua} | prefetch=${isPrefetch(ua)}`);
+
   // Filtre prefetch par User-Agent
   if (isPrefetch(ua)) {
-    console.log(`[PREFETCH ignoré] ${id} — UA: ${ua}`);
+    console.log(`[IGNORÉ] prefetch détecté`);
     return res.status(200).send(pixel);
   }
 
@@ -39,7 +42,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         chat_id: TELEGRAM_CHAT_ID,
         parse_mode: "HTML",
-        text: `🔥 <b>Email ouvert!</b>\n\n📧 ${id}\n📬 ${type || "first"}\n⏰ ${new Date().toLocaleString("fr-FR", { timeZone: "Europe/Paris" })}`,
+        text: `🔥 <b>Email ouvert!</b>\n\n📧 ${id}\n📬 ${type || "first"}\n🖥️ <code>${ua.substring(0, 80)}</code>\n⏰ ${new Date().toLocaleString("fr-FR", { timeZone: "Europe/Paris" })}`,
       }),
     });
   } catch (e) {
