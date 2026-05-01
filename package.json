@@ -1,0 +1,6 @@
+{
+  "name": "makria-pixel",
+  "version": "1.0.0",
+  "description": "Pixel tracking server for Makria",
+  "private": true
+}
