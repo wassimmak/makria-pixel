@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   const sentAt = parseInt(ts || "0");
   const delay = now - sentAt;
 
-  if (sentAt > 0 && delay < 30) {
+  if (sentAt > 0 && delay < 5) {
     console.log(`[PREFETCH ignoré] ${id} — délai: ${delay}s`);
     const pixel = Buffer.from(
       "R0lGODlhAQABAPAAAAAAAAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==",
